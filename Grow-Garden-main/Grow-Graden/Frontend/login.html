@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growvia - Member Login</title>
+    <link rel="stylesheet" href="Css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <!-- Top Announcement Strip -->
+    <div class="top-announcement">
+        🌿 Welcome to Growvia &bull; Botanical Collective Community
+    </div>
+
+    <!-- Navigation Section -->
+    <nav>
+        <a href="index.html" class="brand-wrapper">
+            <span class="brand-logo-icon">🌿</span>
+            <div class="brand-title-text">Grow<span>via</span></div>
+        </a>
+        <div id="nav-bar-container">
+            <div class="nav-content"><a href="index.html">HOME</a></div>
+            <div class="nav-content"><a href="http://localhost:8080" target="_blank">COMMUNITY DASHBOARD</a></div>
+            <div class="nav-content"><a href="http://localhost:8080/tips" target="_blank">TIPS</a></div>
+            <div class="nav-content"><a href="http://localhost:8080/discussions" target="_blank">PLANT CLINIC</a></div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Welcome Back!</h2>
+                <p>Log in to your Growvia botanical journal</p>
+            </div>
+            <form onsubmit="event.preventDefault(); window.location.href='http://localhost:8080';">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="gardener@growvia.community" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth-submit">Sign In to Growvia</button>
+            </form>
+            <div class="auth-switch">
+                Don't have an account yet? <a href="signup.html">Create a free account</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            &copy; 2026 Growvia Collective Platform. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

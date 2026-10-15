@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growvia - Botanical Collective & Online Plant Sanctuary</title>
+    <link rel="stylesheet" href="Css/main.css">
+    <!-- Font Awesome / Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <!-- Top Announcement Strip -->
+    <div class="top-announcement">
+        🌿 Welcome to Growvia &bull; Join over 1,200+ plant lovers sharing tips, diagnosing diseases, and growing together!
+    </div>
+
+    <!-- Navigation Section -->
+    <nav>
+        <a href="index.html" class="brand-wrapper">
+            <span class="brand-logo-icon">🌿</span>
+            <div class="brand-title-text">Grow<span>via</span></div>
+        </a>
+
+        <div id="nav-bar-container">
+            <div class="nav-content"><a href="#plants">PLANTS</a></div>
+            <div class="nav-content"><a href="#seeds">SEEDS</a></div>
+            <div class="nav-content"><a href="#planters">POTS & PLANTERS</a></div>
+            <div class="nav-content"><a href="#care">PLANT CARE</a></div>
+            <div class="nav-content"><a href="#gifting">GIFTING</a></div>
+            <div class="nav-content"><a href="http://localhost:8080" target="_blank" style="color: var(--primary); font-weight: 700;">COMMUNITY FORUM &rarr;</a></div>
+        </div>
+
+        <div id="nav-utils">
+            <div id="search-bar">
+                <input type="text" placeholder="Search plants, seeds...">
+            </div>
+            <a href="login.html" class="util-icon-btn" title="User Login">
+                <i class="bi bi-person"></i>
+            </a>
+            <a href="signup.html" class="util-icon-btn" title="Sign Up">
+                <i class="bi bi-person-plus"></i>
+            </a>
+            <a href="#cart" class="util-icon-btn" title="Shopping Cart">
+                <i class="bi bi-bag"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <main>
+        <!-- Hero Banner -->
+        <section class="hero-banner-container">
+            <h1>Cultivate Living Greenery with Growvia</h1>
+            <p>From indoor windowsill herbs to thriving outdoor gardens, discover curated botanicals, organic remedies, and expert horticultural care.</p>
+            <div class="hero-actions">
+                <a href="#plants" class="btn-main-action">Explore Collection</a>
+                <a href="http://localhost:8080/discussions" target="_blank" class="btn-secondary-action">Visit Plant Clinic</a>
+            </div>
+        </section>
+
+        <!-- Offers Banner -->
+        <section id="offers-ad">
+            <div>
+                <div>
+                    <h2>Our Very New Shades of Green</h2>
+                    <p>Discover fresh seasonal arrivals, starter kits, and member discounts.</p>
+                </div>
+                <div>
+                    <button onclick="alert('Viewing seasonal plant packages!')">VIEW ALL OFFERS</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories & Featured Products -->
+        <section id="section1">
+            <h1>What Are You Looking For?</h1>
+            <div id="section1-cards-container">
+                <!-- Card 1 -->
+                <div class="plant-product-card" id="plants">
+                    <div class="plant-card-img-wrap">
+                        <img src="..\img\plants_f94dbc15-5a1d-4c15-bce2-dcdf22e7fca3.webp" alt="Indoor Air Purifier Plants">
+                    </div>
+                    <div class="plant-card-body">
+                        <span class="plant-badge">Indoor Foliage</span>
+                        <h4>Air-Purifying Plant Bundle</h4>
+                        <p class="plant-card-desc">Hardy Snake Plants & ZZ plants that thrive in indirect sunlight with minimal watering.</p>
+                        <div class="plant-card-meta">
+                            <span class="plant-price">$24.99</span>
+                            <button class="btn-card-add">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="plant-product-card" id="gifting">
+                    <div class="plant-card-img-wrap">
+                        <img src="..\img\Rakhi-02.webp" alt="Botanical Gift Hamper">
+                    </div>
+                    <div class="plant-card-body">
+                        <span class="plant-badge">Botanical Gift</span>
+                        <h4>Eco-Friendly Plant Hamper</h4>
+                        <p class="plant-card-desc">Curated potted succulent, organic plant fertilizer bar, and handcrafted clay planter.</p>
+                        <div class="plant-card-meta">
+                            <span class="plant-price">$34.50</span>
+                            <button class="btn-card-add">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="plant-product-card" id="seeds">
+                    <div class="plant-card-img-wrap">
+                        <img src="..\img\seeds.webp" alt="Organic Seeds Collection">
+                    </div>
+                    <div class="plant-card-body">
+                        <span class="plant-badge">Heirloom Seeds</span>
+                        <h4>Herb & Microgreens Seed Kit</h4>
+                        <p class="plant-card-desc">Non-GMO Sweet Basil, Italian Parsley, Coriander, and fast-germinating salad greens.</p>
+                        <div class="plant-card-meta">
+                            <span class="plant-price">$12.99</span>
+                            <button class="btn-card-add">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="plant-product-card" id="planters">
+                    <div class="plant-card-img-wrap">
+                        <img src="..\img\pots_and_planters.webp" alt="Ceramic Pots and Planters">
+                    </div>
+                    <div class="plant-card-body">
+                        <span class="plant-badge">Pots & Planters</span>
+                        <h4>Terracotta Ceramic Planter</h4>
+                        <p class="plant-card-desc">Breathable earthenware pot with drainage hole and matching drip saucer.</p>
+                        <div class="plant-card-meta">
+                            <span class="plant-price">$18.75</span>
+                            <button class="btn-card-add">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content-wrap">
+            <div class="footer-col">
+                <h4>ABOUT GROWVIA</h4>
+                <p>Growvia is a collaborative community for gardeners, urban botanists, and plant lovers to learn, grow, and thrive together.</p>
+                <a href="http://localhost:8080/about" target="_blank">Platform Architecture</a>
+            </div>
+            <div class="footer-col">
+                <h4>CUSTOMER CARE</h4>
+                <a href="#care">Plant Care Guides</a>
+                <a href="http://localhost:8080/discussions" target="_blank">Plant Clinic Q&A</a>
+                <a href="#shipping">Shipping & Delivery</a>
+                <a href="#faq">Frequently Asked Questions</a>
+            </div>
+            <div class="footer-col">
+                <h4>COMMUNITY</h4>
+                <a href="http://localhost:8080/tips" target="_blank">Gardening Tips & Articles</a>
+                <a href="http://localhost:8080/projects" target="_blank">Personal Garden Tracker</a>
+                <a href="login.html">Gardener Portal Login</a>
+                <a href="signup.html">Join the Community</a>
+            </div>
+            <div class="footer-col">
+                <h4>GET IN TOUCH</h4>
+                <p><i class="bi bi-geo-alt"></i> Botanical Gardens & Greenhouses</p>
+                <p><i class="bi bi-envelope"></i> hello@growvia.community</p>
+                <p><i class="bi bi-shield-check"></i> 100% Organic & Non-Toxic</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Growvia Collective Platform. All rights reserved. Cultivated with 🌿 for plant parents worldwide.
+        </div>
+    </footer>
+</body>
+</html>

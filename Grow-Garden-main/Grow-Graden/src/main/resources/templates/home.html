@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Growvia - Online Gardening Community')}">
+</head>
+<body>
+
+    <!-- Sidebar & Global CloudShader -->
+    <nav th:replace="~{fragments/layout :: navbar('home')}"></nav>
+
+    <!-- Homepage-Specific Scroll-Driven Garden Reveal Backdrop (Scenes B & C) -->
+    <link rel="stylesheet" th:href="@{/css/garden-reveal.css}" href="/css/garden-reveal.css">
+
+    <div class="scroll-garden-reveal-container" id="scrollGardenReveal" aria-hidden="true">
+        <!-- Ambient Botanical Veil -->
+        <div class="garden-ambient-veil"></div>
+
+        <!-- Distant Forest Canopy Silhouettes (Parallax rate: 0.12) -->
+        <div class="garden-layer garden-canopy-distant">
+            <svg class="garden-svg-backdrop" viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="canopyGradDistant" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#1b6e4f" stop-opacity="0.4"/>
+                        <stop offset="60%" stop-color="#0c4732" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#032117" stop-opacity="0.96"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#canopyGradDistant)" d="M0,260 Q120,200 240,240 T480,210 T720,250 T960,195 T1200,240 T1440,215 L1440,400 L0,400 Z" />
+                <path fill="url(#canopyGradDistant)" opacity="0.6" d="M0,290 Q160,230 320,270 T640,240 T960,260 T1280,230 T1440,255 L1440,400 L0,400 Z" />
+            </svg>
+        </div>
+
+        <!-- Midground Lush Foliage & Fern Layer (Parallax rate: 0.22) -->
+        <div class="garden-layer garden-foliage-midground">
+            <svg class="garden-svg-midground" viewBox="0 0 1440 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="midLeavesGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#22855f" stop-opacity="0.65"/>
+                        <stop offset="50%" stop-color="#105b3e" stop-opacity="0.88"/>
+                        <stop offset="100%" stop-color="#052c1e" stop-opacity="0.98"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#midLeavesGrad)" d="M0,310 C60,250 110,230 170,260 C230,290 280,220 360,235 C440,250 510,180 600,220 C690,260 760,210 850,240 C940,270 1020,190 1120,230 C1220,270 1310,210 1440,270 L1440,420 L0,420 Z"/>
+                <path fill="url(#midLeavesGrad)" opacity="0.55" d="M-20,340 C80,280 160,270 240,300 C320,330 420,260 520,290 C620,320 710,250 820,280 C930,310 1050,250 1180,290 C1310,330 1380,270 1460,310 L1460,420 L-20,420 Z"/>
+            </svg>
+        </div>
+
+        <!-- Foreground Botanical Fronds & Tropical Foliage (Parallax rate: 0.36) -->
+        <div class="garden-frond garden-frond-left">
+            <svg viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMax meet">
+                <defs>
+                    <linearGradient id="frondLeftGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+                        <stop offset="0%" stop-color="#2cb680" stop-opacity="0.88"/>
+                        <stop offset="60%" stop-color="#14754f" stop-opacity="0.94"/>
+                        <stop offset="100%" stop-color="#063825" stop-opacity="0.98"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#frondLeftGrad)" d="M-60,540 C-30,420 20,320 110,240 C140,213 185,185 240,170 C220,210 185,245 155,275 C210,250 260,245 305,250 C265,285 220,315 175,335 C230,325 280,335 315,355 C270,380 220,400 170,410 C215,410 255,425 280,450 C235,465 185,470 135,475 C85,480 0,510 -60,540 Z"/>
+                <path fill="url(#frondLeftGrad)" opacity="0.7" d="M-80,540 C-40,360 40,240 160,140 C190,115 225,95 270,80 C245,125 205,160 170,195 C230,170 280,165 315,180 C270,215 215,245 165,265 C115,285 -20,440 -80,540 Z"/>
+            </svg>
+        </div>
+
+        <div class="garden-frond garden-frond-right">
+            <svg viewBox="0 0 340 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMax meet">
+                <defs>
+                    <linearGradient id="frondRightGrad" x1="90%" y1="0%" x2="10%" y2="100%">
+                        <stop offset="0%" stop-color="#34d399" stop-opacity="0.85"/>
+                        <stop offset="55%" stop-color="#16855b" stop-opacity="0.94"/>
+                        <stop offset="100%" stop-color="#083d29" stop-opacity="0.98"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#frondRightGrad)" d="M400,560 C370,430 310,320 220,230 C190,200 140,170 80,150 C105,195 145,235 180,270 C120,240 65,235 15,245 C65,280 115,315 165,340 C105,330 50,340 10,365 C60,395 115,415 170,425 C120,425 75,445 45,475 C95,490 150,490 205,490 C260,490 350,520 400,560 Z"/>
+                <path fill="url(#frondRightGrad)" opacity="0.65" d="M420,560 C380,370 290,240 160,130 C125,100 85,80 35,65 C65,115 110,155 150,190 C85,165 30,165 -10,185 C40,220 100,255 155,275 C210,295 360,450 420,560 Z"/>
+            </svg>
+        </div>
+
+        <!-- Sunlight & Morning Conservatory Ray Dapples -->
+        <div class="garden-sunlight-veil"></div>
+    </div>
+
+    <!-- Flash Alerts -->
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+
+    <main class="container-fluid px-3 px-md-5 my-4">
+        <!-- Botanical Editorial Hero (Airy, Transparent to CloudShader Background) -->
+        <section class="hero-editorial-section py-4 py-md-5 mb-5">
+            <div class="row align-items-center">
+                <div class="col-xl-9 col-lg-10">
+                    <div class="hero-eyebrow mb-3">
+                        <span class="editorial-badge">
+                            <i class="bi bi-flower1 me-1 text-success"></i> Growvia &bull; Botanical Knowledge Collective
+                        </span>
+                    </div>
+
+                    <h1 class="hero-editorial-headline mb-3">
+                        Cultivate Knowledge,<br>
+                        <span class="headline-serif-accent">Share the Living Harvest.</span>
+                    </h1>
+
+                    <p class="hero-editorial-subtitle mb-4">
+                        A collaborative sanctuary where plant parents, urban botanists, and allotment growers diagnose plant health, share organic wisdom, and nurture thriving green spaces together.
+                    </p>
+
+                    <!-- Three Primary Actions (Editorial Focus) -->
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                        <a th:href="@{/tips}" class="btn btn-editorial-primary px-4 py-2">
+                            <i class="bi bi-book-half me-2"></i>Explore Gardening Tips
+                        </a>
+                        <a th:href="@{/projects/new}" class="btn btn-editorial-secondary px-4 py-2">
+                            <i class="bi bi-flower2 me-2"></i>Share Your Garden
+                        </a>
+                        <a href="#plantDoctorBench" class="btn btn-outline-success px-3 py-2">
+                            <i class="bi bi-heart-pulse-fill me-1"></i> Plant Clinic Doctor
+                        </a>
+                    </div>
+
+                    <!-- Quick Search / Discover in Hero -->
+                    <div class="row mb-4">
+                        <div class="col-md-10 col-lg-8">
+                            <form th:action="@{/tips}" method="get" class="d-flex align-items-center bg-white rounded-pill p-1 shadow-sm border border-success border-opacity-25">
+                                <span class="ps-3 pe-2 text-success"><i class="bi bi-search fs-6"></i></span>
+                                <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none py-2" placeholder="Search plant remedies, symptoms, or species...">
+                                <button type="submit" class="btn btn-garden-primary rounded-pill px-4">Search</button>
+                            </form>
+                            <div class="d-flex flex-wrap gap-2 mt-2 pt-1 ps-2 small text-muted">
+                                <span class="fw-semibold text-success">Trending:</span>
+                                <a th:href="@{/tips(category='Pest & Disease Control')}" class="text-decoration-none text-secondary">#NeemOil</a>
+                                <a th:href="@{/tips(category='Plant Care')}" class="text-decoration-none text-secondary">#WateringGuide</a>
+                                <a th:href="@{/discussions(category='Plant Diseases')}" class="text-decoration-none text-secondary">#YellowLeaves</a>
+                                <a th:href="@{/projects}" class="text-decoration-none text-secondary">#BalconyGarden</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subtle Integrated Statistics Strip (No Heavy Dashboard Tiles) -->
+                    <div class="hero-metrics-strip d-flex flex-wrap align-items-center gap-3 gap-md-4 pt-2">
+                        <div class="metric-item">
+                            <span class="metric-num" th:text="${totalTips}">0</span>
+                            <span class="metric-label">Gardening Tips</span>
+                        </div>
+                        <span class="metric-separator" aria-hidden="true">&bull;</span>
+                        <div class="metric-item">
+                            <span class="metric-num" th:text="${totalQuestions}">0</span>
+                            <span class="metric-label">Community Questions</span>
+                        </div>
+                        <span class="metric-separator" aria-hidden="true">&bull;</span>
+                        <div class="metric-item">
+                            <span class="metric-num" th:text="${resolvedQuestions}">0</span>
+                            <span class="metric-label">Solved Problems</span>
+                        </div>
+                        <span class="metric-separator" aria-hidden="true">&bull;</span>
+                        <div class="metric-item">
+                            <span class="metric-num" th:text="${totalProjects}">0</span>
+                            <span class="metric-label">Active Projects</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Three Botanical Feature Sections (Consistent Botanical System, No Saturated Borders) -->
+        <section class="mb-5">
+            <div class="row g-4">
+                <!-- 1. Gardening Tips -->
+                <div class="col-md-4">
+                    <div class="editorial-feature-card h-100 p-4">
+                        <div class="feature-icon-circle mb-3">
+                            <i class="bi bi-lightbulb-fill"></i>
+                        </div>
+                        <h4 class="editorial-feature-title mb-1">Gardening Tips</h4>
+                        <div class="editorial-feature-subtitle mb-3">Proven Guides & Organic Remedies</div>
+                        <p class="editorial-feature-text mb-4">
+                            Discover organic pest controls, nutrient-rich compost recipes, and seasonal plant maintenance shared by experienced growers.
+                        </p>
+                        <a th:href="@{/tips}" class="editorial-feature-link mt-auto">
+                            Browse Knowledge Base <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. Community Q&A -->
+                <div class="col-md-4">
+                    <div class="editorial-feature-card h-100 p-4">
+                        <div class="feature-icon-circle mb-3">
+                            <i class="bi bi-chat-quote-fill"></i>
+                        </div>
+                        <h4 class="editorial-feature-title mb-1">Community Q&A</h4>
+                        <div class="editorial-feature-subtitle mb-3">Disease Diagnosis & Guidance</div>
+                        <p class="editorial-feature-text mb-4">
+                            Encountering yellowing leaves, mildew, or wilting roots? Post plant questions and receive practical troubleshooting from the community.
+                        </p>
+                        <a th:href="@{/discussions}" class="editorial-feature-link mt-auto">
+                            Open Discussion Forum <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Personal Projects -->
+                <div class="col-md-4">
+                    <div class="editorial-feature-card h-100 p-4">
+                        <div class="feature-icon-circle mb-3">
+                            <i class="bi bi-calendar2-check-fill"></i>
+                        </div>
+                        <h4 class="editorial-feature-title mb-1">Garden Projects</h4>
+                        <div class="editorial-feature-subtitle mb-3">Personal Journal & Growth Milestones</div>
+                        <p class="editorial-feature-text mb-4">
+                            Document windowsill herbs, balcony raised beds, and backyard perennials through developmental milestones from seed to harvest.
+                        </p>
+                        <a th:href="@{/projects}" class="editorial-feature-link mt-auto">
+                            View Garden Projects <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plant Doctor Quick-Troubleshooter (Practical Interactive Community Utility) -->
+        <section class="plant-doctor-card mb-5" id="plantDoctorBench">
+            <div class="plant-doctor-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge" style="background: var(--plant-clay); color: #fff; font-size: 0.72rem; letter-spacing: 0.5px;">DIAGNOSTIC BENCH</span>
+                        <span class="small fw-semibold text-muted">First Aid for Houseplants & Garden Crops</span>
+                    </div>
+                    <h3 class="editorial-block-heading mb-0" style="font-size: 1.35rem;">
+                        <i class="bi bi-heart-pulse-fill me-2" style="color: var(--plant-clay);"></i>Plant Doctor Quick-Troubleshooter
+                    </h3>
+                </div>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/discussions/new}" class="btn btn-editorial-primary btn-sm px-3 py-2">
+                        <i class="bi bi-chat-plus-fill me-1"></i> Ask the Community
+                    </a>
+                </div>
+            </div>
+
+            <div class="p-4">
+                <p class="text-muted small mb-3">
+                    Notice something off with your foliage or potting soil? Select a symptom below for rapid diagnostic checks and proven organic remedies:
+                </p>
+
+                <!-- Symptom Tabs -->
+                <div class="d-flex flex-wrap gap-2 mb-4" id="doctorSymptomTabs" role="tablist">
+                    <button class="symptom-nav-btn active" data-target="#symp-yellow" type="button">
+                        <i class="bi bi-droplet-half"></i> Yellowing Leaves
+                    </button>
+                    <button class="symptom-nav-btn" data-target="#symp-brown" type="button">
+                        <i class="bi bi-fire"></i> Crispy Brown Tips
+                    </button>
+                    <button class="symptom-nav-btn" data-target="#symp-mildew" type="button">
+                        <i class="bi bi-cloud-snow"></i> Powdery White Spots
+                    </button>
+                    <button class="symptom-nav-btn" data-target="#symp-gnats" type="button">
+                        <i class="bi bi-bug"></i> Soil Gnats & Damping Off
+                    </button>
+                </div>
+
+                <!-- Panels -->
+                <div id="doctorPanels">
+                    <!-- 1. Yellowing Leaves -->
+                    <div class="doctor-diagnosis-panel active" id="symp-yellow">
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <h5 class="fw-bold mb-2 text-dark">Lower leaves turning pale yellow while stems feel soft?</h5>
+                                <p class="text-secondary small mb-3">
+                                    <strong>Primary Cause:</strong> Moisture saturation around the root ball leading to oxygen starvation, or natural shedding of old lower leaves.
+                                </p>
+                                <div class="remedy-box mb-3">
+                                    <div class="fw-bold small text-dark mb-1"><i class="bi bi-check2-circle me-1" style="color: var(--plant-clay);"></i> Recommended Action:</div>
+                                    <p class="small text-muted mb-0">
+                                        Test soil depth 2 inches down with a clean wooden chopstick. If damp or cool, withhold water completely for 7&ndash;10 days. Ensure the drainage hole isn't blocked by sitting saucer water. If leaves are uniformly light green, dilute a teaspoon of liquid vermicompost extract to replenish nitrogen.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="p-3 rounded-3" style="background: #fbf5ef; border: 1px dashed var(--plant-sand-border);">
+                                    <span class="badge bg-white text-dark border mb-2 small">Diagnostic Check</span>
+                                    <ul class="list-unstyled small text-muted mb-0">
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Chopstick test:</strong> Top 50% soil must be dry</li>
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Pot weight:</strong> Heavy pot = trapped water</li>
+                                        <li><i class="bi bi-arrow-right text-success me-1"></i><a th:href="@{/tips(category='Plant Care')}" class="text-decoration-none fw-semibold" style="color: var(--plant-clay);">Browse Watering Guides &rarr;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Crispy Brown Tips -->
+                    <div class="doctor-diagnosis-panel" id="symp-brown">
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <h5 class="fw-bold mb-2 text-dark">Edges and leaf tips are dry, papery, or curled inward?</h5>
+                                <p class="text-secondary small mb-3">
+                                    <strong>Primary Cause:</strong> Low ambient room humidity (under 40%), tap water mineral/fluoride salt burn, or erratic under-watering.
+                                </p>
+                                <div class="remedy-box mb-3">
+                                    <div class="fw-bold small text-dark mb-1"><i class="bi bi-check2-circle me-1" style="color: var(--plant-clay);"></i> Recommended Action:</div>
+                                    <p class="small text-muted mb-0">
+                                        Group tropical potted plants together to create a natural transpiration microclimate. Flush the pot with rainwater or filtered water until runoff flows freely to leach accumulated fertilizer salts. Trim crispy brown tips leaving a tiny sliver of margin to avoid opening fresh wounds.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="p-3 rounded-3" style="background: #fbf5ef; border: 1px dashed var(--plant-sand-border);">
+                                    <span class="badge bg-white text-dark border mb-2 small">Diagnostic Check</span>
+                                    <ul class="list-unstyled small text-muted mb-0">
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Water source:</strong> Switch to filtered or rested water</li>
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Pebble tray:</strong> Keep humidity 50%+ for aroids</li>
+                                        <li><i class="bi bi-arrow-right text-success me-1"></i><a th:href="@{/discussions(category='Plant Diseases')}" class="text-decoration-none fw-semibold" style="color: var(--plant-clay);">Search Community Symptoms &rarr;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Powdery White Mildew -->
+                    <div class="doctor-diagnosis-panel" id="symp-mildew">
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <h5 class="fw-bold mb-2 text-dark">White, talcum-like powder spreading on upper leaf surfaces and buds?</h5>
+                                <p class="text-secondary small mb-3">
+                                    <strong>Primary Cause:</strong> Fungal powdery mildew (Podosphaera pannosa) triggered by stagnant warm air and dense foliage.
+                                </p>
+                                <div class="remedy-box mb-3">
+                                    <div class="fw-bold small text-dark mb-1"><i class="bi bi-check2-circle me-1" style="color: var(--plant-clay);"></i> Recommended Action:</div>
+                                    <p class="small text-muted mb-0">
+                                        Prune dense center stems to improve air circulation. Spray early in the morning with a gentle bio-fungicide: dissolve 1 teaspoon potassium bicarbonate (or baking soda) and 2 drops of castile soap into 1 Liter warm water. Never wet foliage in late evening.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="p-3 rounded-3" style="background: #fbf5ef; border: 1px dashed var(--plant-sand-border);">
+                                    <span class="badge bg-white text-dark border mb-2 small">Diagnostic Check</span>
+                                    <ul class="list-unstyled small text-muted mb-0">
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Ventilation:</strong> Space pots at least 6 inches apart</li>
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Bio-spray:</strong> Apply every 5 days for 2 weeks</li>
+                                        <li><i class="bi bi-arrow-right text-success me-1"></i><a th:href="@{/tips(category='Pest & Disease Control')}" class="text-decoration-none fw-semibold" style="color: var(--plant-clay);">Organic Disease Control Tips &rarr;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Soil Gnats & Damping Off -->
+                    <div class="doctor-diagnosis-panel" id="symp-gnats">
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <h5 class="fw-bold mb-2 text-dark">Tiny black flies hovering over moist potting soil or seedlings collapsing?</h5>
+                                <p class="text-secondary small mb-3">
+                                    <strong>Primary Cause:</strong> Fungus gnat larvae feeding on decaying organic matter in perpetually soggy topsoil.
+                                </p>
+                                <div class="remedy-box mb-3">
+                                    <div class="fw-bold small text-dark mb-1"><i class="bi bi-check2-circle me-1" style="color: var(--plant-clay);"></i> Recommended Action:</div>
+                                    <p class="small text-muted mb-0">
+                                        Allow top 2 inches of soil to dry out bone-dry to break the egg cycle. Dust food-grade Ceylon cinnamon powder over the soil surface (a natural organic anti-fungal that eliminates larvae food sources). Water from the bottom saucer rather than from the top.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="p-3 rounded-3" style="background: #fbf5ef; border: 1px dashed var(--plant-sand-border);">
+                                    <span class="badge bg-white text-dark border mb-2 small">Diagnostic Check</span>
+                                    <ul class="list-unstyled small text-muted mb-0">
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Topsoil barrier:</strong> Top with 1/2 inch coarse sand</li>
+                                        <li class="mb-2"><i class="bi bi-check text-success me-1"></i><strong>Bottom watering:</strong> 15 mins in shallow tray</li>
+                                        <li><i class="bi bi-arrow-right text-success me-1"></i><a th:href="@{/discussions/new}" class="text-decoration-none fw-semibold" style="color: var(--plant-clay);">Ask for Diagnosis Help &rarr;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Gardening Tips (Editorial Photographic Presentation) -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+                <div>
+                    <span class="text-uppercase small fw-bold text-success" style="letter-spacing: 0.8px; font-size: 0.75rem;">Community Highlights</span>
+                    <h2 class="editorial-section-heading mb-0">Featured Gardening Tips</h2>
+                </div>
+                <a th:href="@{/tips}" class="editorial-link-subtle">
+                    View Complete Journal <i class="bi bi-chevron-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" th:each="tip, iterStat : ${featuredTips}">
+                    <div class="editorial-tip-card h-100">
+                        <div class="editorial-img-container" th:if="${tip.imageUrl != null}">
+                            <img th:src="${tip.imageUrl}"
+                                 alt="Plant tip photograph"
+                                 class="editorial-img"
+                                 th:attr="onerror=${'this.src=''https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80'''}" />
+                        </div>
+                        <div class="editorial-tip-body p-3 d-flex flex-column flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge-category-pill" th:text="${tip.category}">Plant Care</span>
+                                <span class="badge-difficulty-pill"
+                                      th:classappend="${tip.difficultyLevel == 'Beginner' ? 'diff-beginner' : (tip.difficultyLevel == 'Intermediate' ? 'diff-intermediate' : 'diff-advanced')}"
+                                      th:text="${tip.difficultyLevel}">Beginner</span>
+                            </div>
+                            <h5 class="editorial-tip-title mb-2">
+                                <a th:href="@{/tips/{id}(id=${tip.id})}" class="stretched-link text-decoration-none" th:text="${tip.title}">
+                                    Tip Title
+                                </a>
+                            </h5>
+                            <p class="editorial-tip-summary small mb-3 flex-grow-1" th:text="${tip.summary}">
+                                Summary of the tip...
+                            </p>
+                            <div class="editorial-tip-meta pt-2 d-flex justify-content-between align-items-center small">
+                                <span class="author-label"><i class="bi bi-person me-1"></i> <span th:text="${tip.author}">Author</span></span>
+                                <span class="likes-label"><i class="bi bi-heart-fill text-danger me-1"></i> <span th:text="${tip.likesCount}">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seasonal Cultivation Almanac & Space Guides -->
+        <section class="mb-5">
+            <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+                <div>
+                    <span class="text-uppercase small fw-bold text-success" style="letter-spacing: 0.8px; font-size: 0.75rem;">Gardener's Calendar</span>
+                    <h2 class="editorial-section-heading mb-0">Seasonal Cultivation Almanac</h2>
+                </div>
+                <span class="small text-muted">Timely tasks for current climate cycles</span>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="almanac-task-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="almanac-task-icon"><i class="bi bi-bucket-fill"></i></div>
+                            <h6 class="fw-bold mb-0 text-dark">Soil & Compost Refresh</h6>
+                        </div>
+                        <p class="small text-muted mb-0">
+                            Gently aerate compacted container soil with a hand fork. Top-dress with 1-2 inches of screened vermicompost to replenish micronutrients without disturbing roots.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="almanac-task-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="almanac-task-icon"><i class="bi bi-scissors"></i></div>
+                            <h6 class="fw-bold mb-0 text-dark">Clean Shears & Prune</h6>
+                        </div>
+                        <p class="small text-muted mb-0">
+                            Sterilize pruners in 70% alcohol. Trim leggy vines above leaf nodes to stimulate bushier branching and prepare node cuttings for propagation.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="almanac-task-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="almanac-task-icon"><i class="bi bi-shield-shaded"></i></div>
+                            <h6 class="fw-bold mb-0 text-dark">Foliar Pest Defense</h6>
+                        </div>
+                        <p class="small text-muted mb-0">
+                            Mist leaf undersides with cold-pressed neem oil (5ml/L with mild castile soap) every 10 days at sunset to deter spider mites and thrips before colonies take hold.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="almanac-task-card">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <div class="almanac-task-icon"><i class="bi bi-sun-fill"></i></div>
+                            <h6 class="fw-bold mb-0 text-dark">Sunlight Angle Check</h6>
+                        </div>
+                        <p class="small text-muted mb-0">
+                            As seasonal sun arcs shift, rotate houseplants a quarter turn weekly. Move heat-sensitive seedlings to bright indirect light to prevent leaf scorch.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Growing Spaces Guides -->
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                    <div class="growing-space-pill">
+                        <span class="badge bg-light text-dark border mb-1 small">Kitchen & Sill</span>
+                        <h6 class="fw-bold mb-1 text-dark">Windowsill Herbs</h6>
+                        <p class="small text-muted mb-2">Basil, thyme, mint, & chives in porous clay pots with 4-5 hours morning light.</p>
+                        <a th:href="@{/projects}" class="small text-decoration-none fw-semibold" style="color: var(--plant-clay);">View Projects &rarr;</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="growing-space-pill">
+                        <span class="badge bg-light text-dark border mb-1 small">Urban Outdoor</span>
+                        <h6 class="fw-bold mb-1 text-dark">Balcony Containers</h6>
+                        <p class="small text-muted mb-2">Compact cherry tomatoes, peppers, & marigolds in lightweight perlite potting mix.</p>
+                        <a th:href="@{/tips(category='Soil & Fertilizer')}" class="small text-decoration-none fw-semibold" style="color: var(--plant-clay);">Soil Recipes &rarr;</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="growing-space-pill">
+                        <span class="badge bg-light text-dark border mb-1 small">Living Room</span>
+                        <h6 class="fw-bold mb-1 text-dark">Low-Light Sanctuaries</h6>
+                        <p class="small text-muted mb-2">Resilient ZZ plants, sansevieria, & trailing pothos tolerant of ambient lighting.</p>
+                        <a th:href="@{/tips(category='Plant Care')}" class="small text-decoration-none fw-semibold" style="color: var(--plant-clay);">Care Guides &rarr;</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="growing-space-pill">
+                        <span class="badge bg-light text-dark border mb-1 small">Backyard</span>
+                        <h6 class="fw-bold mb-1 text-dark">Raised Beds & Allotments</h6>
+                        <p class="small text-muted mb-2">Companion planting, straw mulching, and natural compost trenches for organic yield.</p>
+                        <a th:href="@{/projects/new}" class="small text-decoration-none fw-semibold" style="color: var(--plant-clay);">Share Your Plot &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Columns: Recent Community Q&A and Active Projects -->
+        <section class="row g-4 mb-5">
+            <!-- Left: Community Discussions -->
+            <div class="col-lg-6">
+                <div class="editorial-container-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-10">
+                        <div>
+                            <span class="text-uppercase small fw-bold text-success" style="font-size: 0.72rem; letter-spacing: 0.6px;">Botanical Advice</span>
+                            <h3 class="editorial-block-heading mb-0">Recent Community Q&A</h3>
+                        </div>
+                        <a th:href="@{/discussions}" class="editorial-link-subtle small">
+                            All Questions <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item bg-transparent border-bottom border-secondary border-opacity-10 px-0 py-3" th:each="q : ${recentQuestions}">
+                            <div class="d-flex justify-content-between align-items-start mb-1 gap-2">
+                                <a th:href="@{/discussions/{id}(id=${q.id})}" class="editorial-question-link fw-bold text-decoration-none" th:text="${q.title}">
+                                    Question title?
+                                </a>
+                                <span th:if="${q.resolved}" class="badge-status-pill status-solved flex-shrink-0">Solved</span>
+                                <span th:unless="${q.resolved}" class="badge-status-pill status-open flex-shrink-0">Open</span>
+                            </div>
+                            <p class="text-muted small mb-2 text-truncate" th:text="${q.description}">Description text...</p>
+                            <div class="d-flex flex-wrap gap-3 small text-muted">
+                                <span><i class="bi bi-tag text-success me-1"></i> <span th:text="${q.category}">Category</span></span>
+                                <span><i class="bi bi-chat-dots me-1"></i> <span th:text="${q.replies.size()}">0</span> replies</span>
+                                <span><i class="bi bi-person me-1"></i> <span th:text="${q.author}">Author</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-2 text-center">
+                        <a th:href="@{/discussions/new}" class="btn btn-editorial-outline btn-sm w-100">
+                            <i class="bi bi-question-circle me-1"></i> Ask the Community
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Active Gardening Projects -->
+            <div class="col-lg-6">
+                <div class="editorial-container-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-secondary border-opacity-10">
+                        <div>
+                            <span class="text-uppercase small fw-bold text-success" style="font-size: 0.72rem; letter-spacing: 0.6px;">Cultivation Journals</span>
+                            <h3 class="editorial-block-heading mb-0">Ongoing Garden Projects</h3>
+                        </div>
+                        <a th:href="@{/projects}" class="editorial-link-subtle small">
+                            All Projects <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item bg-transparent border-bottom border-secondary border-opacity-10 px-0 py-3" th:each="proj : ${recentProjects}">
+                            <div class="d-flex justify-content-between align-items-start mb-1 gap-2">
+                                <a th:href="@{/projects/{id}(id=${proj.id})}" class="editorial-project-link fw-bold text-decoration-none" th:text="${proj.title}">
+                                    Project title
+                                </a>
+                                <span class="badge-status-pill status-project flex-shrink-0" th:text="${proj.status}">In Progress</span>
+                            </div>
+                            <p class="text-muted small mb-2 text-truncate" th:text="${proj.description}">Description...</p>
+                            <div class="d-flex flex-wrap gap-3 small text-muted">
+                                <span><i class="bi bi-flower3 text-success me-1"></i> <span th:text="${proj.plantType}">Plant</span></span>
+                                <span><i class="bi bi-geo-alt text-secondary me-1"></i> <span th:text="${proj.location}">Location</span></span>
+                                <span><i class="bi bi-person me-1"></i> <span th:text="${proj.gardenerName}">Gardener</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-2 text-center">
+                        <a th:href="@{/projects/new}" class="btn btn-editorial-outline btn-sm w-100">
+                            <i class="bi bi-plus-circle me-1"></i> Start a Garden Journal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <!-- Scripts -->
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+    <script th:src="@{/js/garden-reveal.js}" src="/js/garden-reveal.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tabs = document.querySelectorAll('#doctorSymptomTabs .symptom-nav-btn');
+            tabs.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    tabs.forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    var target = this.getAttribute('data-target');
+                    var panels = document.querySelectorAll('#doctorPanels .doctor-diagnosis-panel');
+                    panels.forEach(function(p) { p.classList.remove('active'); });
+                    var active = document.querySelector(target);
+                    if (active) active.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
