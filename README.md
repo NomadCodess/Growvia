@@ -80,6 +80,55 @@ This project was built to achieve maximum marks across both **Java Web-Based Pro
 
 ---
 
+## 🏗️ System Architecture & Tiers
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        Client Browser / REST Client                    │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ HTTP Requests
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ Jakarta Servlet Filter: GardenSecurityHeadersFilter                   │
+│ (Security Headers: nosniff, SAMEORIGIN | Response Latency Timer)       │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+         ┌──────────────────────────┴──────────────────────────┐
+         ▼                                                     ▼
+┌────────────────────────────────┐         ┌─────────────────────────────┐
+│  Thymeleaf MVC Web Controllers │         │    RestApiController        │
+│  - HomeController              │         │  - /api/stats               │
+│  - GardeningTipController      │         │  - /api/jdbc/metrics        │
+│  - DiscussionController        │         │  - /api/advisor/diagnose    │
+│  - GardenProjectController     │         │  - /api/analytics/concurrent│
+└────────────────┬───────────────┘         └──────────────┬──────────────┘
+                 │                                        │
+                 ▼                                        ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                             Service Tier                               │
+│  - GardeningTipService / DiscussionService / GardenProjectService     │
+│  - GardenAnalyticsAggregator (4-Worker Concurrent Thread Pool)         │
+│  - PlantAdvisorRegistry (Polymorphic Dynamic Dispatch)                │
+└────────────────┬───────────────────────────────────────┬───────────────┘
+                 │                                       │
+                 ▼                                       ▼
+┌────────────────────────────────┐         ┌─────────────────────────────┐
+│       Spring Data JPA          │         │    Direct JDBC DAO Tier     │
+│  - GardeningTipRepository      │         │  GardenJdbcDao              │
+│  - DiscussionQuestionRepository│         │  - java.sql.Connection      │
+│  - GardenProjectRepository     │         │  - java.sql.PreparedStatement│
+│  - DiscussionReplyRepository   │         │  - java.sql.ResultSet       │
+└────────────────┬───────────────┘         └──────────────┬──────────────┘
+                 │                                        │
+                 └───────────────────┬────────────────────┘
+                                     ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│           Embedded H2 Relational Database (./data/gardendb)            │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## 🚀 Quick Start & Run Guide
 
 ### 1. Prerequisites
@@ -87,10 +136,11 @@ This project was built to achieve maximum marks across both **Java Web-Based Pro
 - **Git**
 - Maven Wrapper is pre-configured (`mvnw.cmd` on Windows, `./mvnw` on Linux/macOS).
 
-### 2. Navigate to Project Directory
+### 2. Clone & Open Project
 ```powershell
-# Open terminal and navigate to the application folder
-cd Grow-Garden-main\Grow-Graden
+# Clone repository
+git clone https://github.com/NomadCodess/Growvia.git
+cd Growvia
 ```
 
 ### 3. Run Automated Tests
@@ -123,6 +173,113 @@ cd Grow-Garden-main\Grow-Graden
   - *JDBC URL*: `jdbc:h2:file:./data/gardendb`
   - *Username*: `sa`
   - *Password*: *(leave blank)*
+
+---
+
+## 🔌 Complete REST API Reference
+
+| Method | Route | Description | Technical Feature |
+|---|---|---|---|
+| `GET` | `/api/stats` | High-level platform statistics | Spring Data JPA queries |
+| `GET` | `/api/tips` | List all tips with optional `?search=` and `?category=` | JPA Specifications |
+| `GET` | `/api/tips/{id}` | Retrieve tip by ID | Custom Exception on 404 |
+| `GET` | `/api/discussions` | List questions with `?category=` & `?resolved=` | Multi-parameter filtering |
+| `GET` | `/api/discussions/{id}` | Retrieve question details and replies | JPA Entity Relationships |
+| `GET` | `/api/projects` | List projects with `?search=` & `?status=` | Status enum mapping |
+| `GET` | `/api/projects/{id}` | Retrieve project journal details | Full CRUD |
+| `GET` | `/api/jdbc/metrics` | Category breakdown & project status metrics | **Direct JDBC PreparedStatement** |
+| `GET` | `/api/jdbc/tips/search` | Search tips via raw SQL PreparedStatement | **Generics (`SearchResultWrapper<T>`)** |
+| `GET` | `/api/advisor/diagnose` | Diagnose plant symptom (`?plantType=&symptom=`) | **Runtime Polymorphism** |
+| `GET` | `/api/advisor/care-plan` | Generate care schedule (`?plantType=&spaceType=`) | **Polymorphic Template Method** |
+| `GET` | `/api/analytics/concurrent-summary` | 4-thread parallel aggregated community metrics | **Multithreading & Synchronization** |
+
+---
+
+## 📁 Repository Structure
+
+```
+Grow-Graden/
+├── pom.xml                                   # Maven POM with dependencies (Spring Boot, Thymeleaf, JPA, H2)
+├── mvnw.cmd / mvnw                           # Maven Wrapper executable scripts
+├── data/gardendb.*                           # Embedded persistent H2 database files
+├── Frontend/                                 # Static preview catalogue
+│   ├── index.html                            # Static landing page
+│   ├── login.html                            # Static login page
+│   ├── signup.html                           # Static signup page
+│   └── Css/main.css                          # Static styles
+└── src/
+    ├── main/
+    │   ├── java/com/example/
+    │   │   ├── GrowGradenApplication.java    # Spring Boot entry point
+    │   │   ├── config/
+    │   │   │   ├── DataInitializer.java       # Database seed data populator
+    │   │   │   └── GardenSecurityHeadersFilter.java # Jakarta Servlet Filter
+    │   │   ├── controller/
+    │   │   │   ├── HomeController.java        # Web dashboard controller
+    │   │   │   ├── GardeningTipController.java# Tips web controller
+    │   │   │   ├── DiscussionController.java  # Q&A web controller
+    │   │   │   ├── GardenProjectController.java # Project web controller
+    │   │   │   └── RestApiController.java    # Complete REST API controller
+    │   │   ├── domain/advisor/               # Polymorphic OOP Advisory Engine
+    │   │   │   ├── AbstractPlantAdvisor.java  # Abstract base class
+    │   │   │   ├── VegetableAdvisor.java      # Concrete subclass
+    │   │   │   ├── SucculentAdvisor.java      # Concrete subclass
+    │   │   │   ├── HerbAdvisor.java           # Concrete subclass
+    │   │   │   ├── TropicalFoliageAdvisor.java# Concrete subclass
+    │   │   │   ├── PlantAdvisorRegistry.java  # Polymorphic registry & factory
+    │   │   │   ├── CarePlan.java              # Care plan model
+    │   │   │   └── DiagnosticResult.java      # Diagnostic outcome model
+    │   │   ├── exception/                     # Custom Exception Hierarchy
+    │   │   │   ├── ResourceNotFoundException.java
+    │   │   │   ├── GardeningTipNotFoundException.java
+    │   │   │   ├── GardenProjectNotFoundException.java
+    │   │   │   ├── DiscussionQuestionNotFoundException.java
+    │   │   │   ├── ErrorResponse.java
+    │   │   │   └── GlobalExceptionHandler.java# Centralized @ControllerAdvice
+    │   │   ├── model/                         # JPA Entities
+    │   │   │   ├── GardeningTip.java
+    │   │   │   ├── DiscussionQuestion.java
+    │   │   │   ├── DiscussionReply.java
+    │   │   │   └── GardenProject.java
+    │   │   ├── repository/
+    │   │   │   ├── GardeningTipRepository.java
+    │   │   │   ├── DiscussionQuestionRepository.java
+    │   │   │   ├── DiscussionReplyRepository.java
+    │   │   │   ├── GardenProjectRepository.java
+    │   │   │   └── jdbc/                      # Direct JDBC Implementation
+    │   │   │       ├── GardenJdbcDao.java     # Raw SQL PreparedStatement DAO
+    │   │   │       ├── CategoryMetric.java
+    │   │   │       ├── ProjectStatusMetric.java
+    │   │   │       └── JdbcTipSummary.java
+    │   │   ├── service/                       # Business Logic Layer
+    │   │   │   ├── GardeningTipService.java / Impl
+    │   │   │   ├── DiscussionService.java / Impl
+    │   │   │   ├── GardenProjectService.java / Impl
+    │   │   │   └── GardenAnalyticsAggregator.java # Multithreading & Synchronization
+    │   │   └── util/
+    │   │       └── SearchResultWrapper.java   # Student-written Generics
+    │   └── resources/
+    │       ├── application.properties        # Application configuration
+    │       ├── static/
+    │       │   ├── css/
+    │       │   │   ├── style.css              # Emerald design system & typography
+    │       │   │   └── garden-reveal.css      # Hardware-accelerated scroll layers
+    │       │   └── js/
+    │       │       ├── cloud-shader.js        # WebGL atmospheric canopy drift
+    │       │       ├── garden-reveal.js       # Scroll controller
+    │       │       └── navbar.js              # Sidebar pinning & navigation
+    │       └── templates/                     # Thymeleaf Server-Rendered Views
+    │           ├── fragments/layout.html      # Master responsive template
+    │           ├── home.html                  # Community dashboard
+    │           ├── about.html                 # Mission & values
+    │           ├── error.html                 # Error page
+    │           ├── tips/                      # Tips list, form, detail
+    │           ├── discussions/               # Clinic list, form, detail
+    │           └── projects/                  # Projects list, form, detail
+    └── test/
+        └── java/com/example/
+            └── GrowGradenApplicationTests.java# 19 Full Integration Tests
+```
 
 ---
 
