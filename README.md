@@ -1,292 +1,267 @@
 # 🌿 Growvia — Online Gardening Community Platform
 
-An interactive, server-rendered **Online Gardening Community Platform** built with **Java Spring Boot**, **Thymeleaf**, **Spring Data JPA**, direct **JDBC (`java.sql`)**, and **Multithreaded Concurrent Analytics**.
+### 🌱 Grow Knowledge. Share Nature.
 
-Growvia provides gardening enthusiasts, urban botanists, allotment growers, and plant parents with a digital sanctuary to share horticultural tips, diagnose plant diseases and pests at the Plant Doctor bench, participate in peer Q&A discussions, access polymorphic plant-care advice, and track personal garden projects from seed to harvest.
+**Growvia** is a full-stack, Java-based gardening community platform designed to connect plant enthusiasts, beginners, and experienced gardeners.
 
-The project demonstrates rigorous application of core Java programming, object-oriented design patterns, multithreading and thread synchronization, direct JDBC database connectivity, Jakarta Servlet API integration, and modern responsive web aesthetics.
+It provides an interactive environment where users can share gardening knowledge, explore plant-care techniques, discuss gardening challenges, diagnose common plant problems, and manage their gardening projects.
 
----
-
-## 🏆 Academic Marking Rubric Compliance Matrix
-
-This project was built to achieve maximum marks across both **Java Web-Based Projects** and **Advanced Core Java / GUI** evaluation criteria:
-
-| Rubric Category | Marks | Implementation in Growvia | Primary Source Files |
-|---|---|---|---|
-| **1. OOP Implementation** | **10 Marks** | **Inheritance & Polymorphism:** Abstract base class `AbstractPlantAdvisor` with 4 polymorphic subclasses (`VegetableAdvisor`, `SucculentAdvisor`, `HerbAdvisor`, `TropicalFoliageAdvisor`) dynamically dispatched via `PlantAdvisorRegistry`.<br>**Encapsulation:** Strongly typed entities (`GardeningTip`, `GardenProject`, `DiscussionQuestion`, `DiscussionReply`) with private fields and standard accessors.<br>**Exception Handling:** Custom hierarchy (`ResourceNotFoundException`, `GardeningTipNotFoundException`, `GardenProjectNotFoundException`, `DiscussionQuestionNotFoundException`) managed by centralized `@ControllerAdvice` (`GlobalExceptionHandler`).<br>**Interfaces:** Service contracts (`GardeningTipService`, `DiscussionService`, `GardenProjectService`) separating abstraction from implementation. | `com.example.domain.advisor.*`<br>`com.example.exception.*`<br>`com.example.service.*` |
-| **2. Database Integration & Direct JDBC** | **8 - 14 Marks** | **Direct JDBC API:** Custom DAO `GardenJdbcDao` utilizing genuine `java.sql.Connection`, `java.sql.PreparedStatement`, and `java.sql.ResultSet`.<br>**Database Operations Classes:** DTO records `CategoryMetric`, `ProjectStatusMetric`, and `JdbcTipSummary` mapped row-by-row.<br>**Security & Resilience:** Parameterized queries preventing SQL injection, try-with-resources auto-closing connections, fallback exception wrapping. | `com.example.repository.jdbc.GardenJdbcDao`<br>`com.example.repository.jdbc.*` |
-| **3. Multithreading & Synchronization** | **4 Marks** | **Thread Pools & Worker Threads:** Dedicated `ExecutorService` with 4 concurrent worker threads generated via custom `GrowviaWorkerThread` thread factory.<br>**Parallel Async Execution:** `CompletableFuture.supplyAsync()` executing 4 analytics tasks in parallel and synchronizing via `CompletableFuture.allOf()`.<br>**Thread Synchronization:** `synchronized(mutexLock)` blocks protecting memory cache snapshots, `synchronized` audit logging methods, `AtomicLong` calculation counters, and `ConcurrentHashMap` for lock-free thread safety. | `com.example.service.GardenAnalyticsAggregator`<br>`RestApiController.java` (`/api/analytics/concurrent-summary`) |
-| **4. Collections & Generics** | **6 Marks** | **Collections Framework:** Heavy use of `List`, `Map`, `Set`, `ConcurrentHashMap`, `CopyOnWriteArrayList`, and Java Stream API (`filter`, `map`, `collect`).<br>**Student-Written Generics:** Custom generic container `SearchResultWrapper<T>` featuring generic factory `.of(items, keyword)` and monadic functional mapping `<R> SearchResultWrapper<R> map(Function<T, R>)`. | `com.example.util.SearchResultWrapper`<br>`com.example.service.*` |
-| **5. Servlets & Web Integration** | **7 Marks** | **Jakarta Servlet API Filter:** `GardenSecurityHeadersFilter` implementing `jakarta.servlet.Filter`, intercepting HTTP requests, injecting security headers (`X-Content-Type-Options`, `X-Frame-Options`, `X-Servlet-Filter`), and calculating execution latency (`X-Response-Time-Ms`).<br>**Spring MVC & REST:** Full suite of `@Controller` web handlers rendering Thymeleaf views and `@RestController` exposing JSON endpoints. | `com.example.config.GardenSecurityHeadersFilter`<br>`com.example.controller.*` |
-| **6. Problem Understanding & Solution Design** | **8 Marks** | Realistic, production-grade domain model for community gardening: Plant Clinic disease diagnostics, seasonal garden journals, difficulty-rated guides, and interactive organic care advisors. | Complete application architecture |
+Built using **Java, Spring Boot, Thymeleaf, Spring Data JPA, JDBC, and H2 Database**, Growvia combines modern web development with core Java concepts, including Object-Oriented Programming, Multithreading, Collections, Generics, and Exception Handling.
 
 ---
 
-## ✨ Key Features & Architectural Capabilities
+## 📌 Project Overview
 
-### 1. Botanical Community Dashboard (`/`)
-- **Real-Time Statistics**: Live counters for total tips, community discussions, solved plant diseases, and ongoing garden projects.
-- **Plant Doctor Diagnostic Bench**: Instant interactive symptom diagnosis and care plan generation powered by the polymorphic advisor engine.
-- **Curated Articles Feed**: High-yield organic gardening guides, propagation recipes, and soil preparation methods.
-- **Recent Q&A Feed**: Live preview of unsolved plant issues and community-verified solutions.
-- **Active Projects Showcase**: Garden tracking across indoor windowsills, urban balconies, and raised beds.
-- **Atmospheric Visuals**: Throttled 30 FPS WebGL living emerald canopy background (`cloud-shader.js`) with zero lag or CPU strain.
-- **Cinematic Garden Reveal**: Scroll-driven CSS hardware-accelerated narrative transition revealing the community garden grid.
+Gardening enthusiasts often struggle to find reliable plant-care information, identify plant diseases, and connect with experienced gardeners.
 
-### 2. Gardening Tips & Articles (`/tips`)
-- **Full CRUD Support**: Create, browse, view, edit, and delete gardening tips and articles.
-- **Category & Keyword Filtering**: Filter by categories: *Plant Care*, *Pest & Disease Control*, *Soil & Fertilizer*, *Propagation*, and *Seasonal Gardening*.
-- **Difficulty Badges**: Articles labeled as *Beginner*, *Intermediate*, or *Advanced*.
-- **Community Upvoting**: Interactive "Helpful" like counters on articles.
+Growvia addresses these challenges by providing a centralized platform where users can:
 
-### 3. Community Discussions & Plant Clinic (`/discussions`)
-- **Troubleshoot Plant Diseases**: Post plant symptoms (yellowing leaves, powdery mildew, aphid infestations, overwatering).
-- **Multi-turn Community Answers**: Gardeners and certified horticulturists reply with practical remedies.
-- **Expert Advice Badges**: Flag verified horticultural answers.
-- **Status Tracking**: Mark questions as *Solved* or re-open as *Needs Help*.
+- 🌱 Discover gardening tips and techniques.
+- 🌿 Share knowledge with fellow gardening enthusiasts.
+- 🩺 Identify common plant problems and explore care recommendations.
+- 💬 Participate in gardening discussions.
+- 📊 Track personal gardening projects.
+- 🌻 Explore sustainable and organic gardening practices.
 
-### 4. Personal Gardening Projects (`/projects`)
-- **Garden Tracker**: Manage personal gardens with title, plant species, growing space (*Balcony*, *Backyard*, *Indoor Windowsill*, *Rooftop*), and status (*Planning*, *In Progress*, *Flourishing*, *Completed*).
-- **Milestone & Care Journal**: Log progress, soil recipes, germination dates, and target harvest dates.
-- **Full CRUD Management**: Create, view journal details, edit project specs, or delete projects.
-
-### 5. Multithreaded Concurrent Analytics (`/api/analytics/concurrent-summary`)
-- Asynchronously aggregates 4 distinct data dimensions in parallel across 4 worker threads:
-  1. *Category-Analytics-Worker*: Direct JDBC category distributions.
-  2. *Discussion-Clinic-Worker*: Question resolution percentage.
-  3. *Project-Velocity-Worker*: Project status breakdowns.
-  4. *Vitality-Health-Worker*: Global community health score.
-- Thread-safe snapshot caching using `synchronized(mutexLock)` critical sections and atomic counters.
+The platform aims to make gardening more accessible, interactive, and enjoyable.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Key Features
 
-| Component | Technology |
+### 🌿 1. Gardening Community Dashboard
+- Interactive and responsive homepage.
+- Overview of gardening activities.
+- Gardening articles and community discussions.
+- Real-time statistics and project summaries.
+
+### 📚 2. Gardening Tips & Articles
+- Create, read, update, and delete gardening tips.
+- Search articles using keywords.
+- Filter content by gardening categories.
+- Explore beginner, intermediate, and advanced gardening guides.
+- Like helpful gardening articles.
+
+### 🩺 3. Plant Doctor
+- Explore solutions for common plant diseases.
+- Identify potential plant problems based on symptoms.
+- Receive plant-care recommendations.
+- Access specialized advice for different plant categories.
+
+### 💬 4. Community Discussions
+- Ask gardening-related questions.
+- Share solutions and experiences.
+- Reply to community discussions.
+- Track resolved and unresolved questions.
+
+### 🌻 5. Personal Garden Tracker
+- Create and manage gardening projects.
+- Track plant growth and gardening progress.
+- Maintain gardening journals.
+- Update project milestones and completion status.
+
+### 📊 6. Concurrent Analytics
+- Generate gardening community statistics.
+- Process multiple analytics tasks using Java multithreading.
+- Use thread synchronization for safe concurrent operations.
+- Analyze gardening tips, discussions, and project activities.
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
 |---|---|
-| **Language** | Java 17+ (Fully tested on OpenJDK 17, JDK 21, and JDK 26) |
-| **Backend Framework** | Spring Boot 3.1.2 (Spring MVC, Spring Data JPA, Jakarta Validation) |
-| **Concurrency API** | `java.util.concurrent` (`CompletableFuture`, `ExecutorService`, `AtomicLong`, `ThreadFactory`) |
-| **Frontend Engine** | Thymeleaf 3 (Server-rendered responsive HTML5) |
-| **Typography** | Google Fonts `Fraunces` (Editorial Botanical Serif) & `Outfit` (Modern Clean Sans) |
-| **UI Framework** | Bootstrap 5.3 + Bootstrap Icons + Custom Emerald Glassmorphic Design System |
-| **Graphics / Shader** | WebGL 1.0 / GLSL (Living emerald canopy drift & morning sun bloom) |
-| **Database** | Embedded **H2 Database** (file-based persistence at `./data/gardendb`) |
-| **Direct Database API** | Direct **JDBC** (`java.sql.Connection`, `PreparedStatement`, `ResultSet`) |
-| **Web Integration** | Embedded Apache Tomcat 10 + Jakarta Servlet API (`Filter`) |
-| **Build Tool** | Apache Maven 3.9+ / Maven Wrapper (`mvnw` / `mvnw.cmd`) |
-| **Testing Suite** | JUnit 5, Spring Boot Test, MockMvc (19 integration tests, 100% pass) |
+| Java 17+ | Core programming language |
+| Spring Boot | Backend application framework |
+| Spring MVC | Web request handling |
+| Thymeleaf | Dynamic HTML rendering |
+| HTML5 | Webpage structure |
+| CSS3 | Styling and responsive design |
+| JavaScript | Frontend interactivity |
+| Bootstrap 5 | Responsive UI components |
+| Spring Data JPA | Database operations |
+| JDBC | Direct database connectivity |
+| H2 Database | Data storage |
+| Maven | Dependency management |
+| JUnit 5 | Application testing |
+| Git & GitHub | Version control |
 
 ---
 
-## 🏗️ System Architecture & Tiers
+## 🧠 Core Java Concepts Implemented
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        Client Browser / REST Client                    │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ HTTP Requests
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ Jakarta Servlet Filter: GardenSecurityHeadersFilter                   │
-│ (Security Headers: nosniff, SAMEORIGIN | Response Latency Timer)       │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-         ┌──────────────────────────┴──────────────────────────┐
-         ▼                                                     ▼
-┌────────────────────────────────┐         ┌─────────────────────────────┐
-│  Thymeleaf MVC Web Controllers │         │    RestApiController        │
-│  - HomeController              │         │  - /api/stats               │
-│  - GardeningTipController      │         │  - /api/jdbc/metrics        │
-│  - DiscussionController        │         │  - /api/advisor/diagnose    │
-│  - GardenProjectController     │         │  - /api/analytics/concurrent│
-└────────────────┬───────────────┘         └──────────────┬──────────────┘
-                 │                                        │
-                 ▼                                        ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                             Service Tier                               │
-│  - GardeningTipService / DiscussionService / GardenProjectService     │
-│  - GardenAnalyticsAggregator (4-Worker Concurrent Thread Pool)         │
-│  - PlantAdvisorRegistry (Polymorphic Dynamic Dispatch)                │
-└────────────────┬───────────────────────────────────────┬───────────────┘
-                 │                                       │
-                 ▼                                       ▼
-┌────────────────────────────────┐         ┌─────────────────────────────┐
-│       Spring Data JPA          │         │    Direct JDBC DAO Tier     │
-│  - GardeningTipRepository      │         │  GardenJdbcDao              │
-│  - DiscussionQuestionRepository│         │  - java.sql.Connection      │
-│  - GardenProjectRepository     │         │  - java.sql.PreparedStatement│
-│  - DiscussionReplyRepository   │         │  - java.sql.ResultSet       │
-└────────────────┬───────────────┘         └──────────────┬──────────────┘
-                 │                                        │
-                 └───────────────────┬────────────────────┘
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│           Embedded H2 Relational Database (./data/gardendb)            │
-└────────────────────────────────────────────────────────────────────────┘
-```
+Growvia demonstrates practical implementation of important Java programming concepts.
+
+**Object-Oriented Programming**
+- Encapsulation
+- Inheritance
+- Polymorphism
+- Abstraction
+- Interfaces
+
+**Multithreading**
+- ExecutorService
+- CompletableFuture
+- Thread synchronization
+- Concurrent collections
+
+**Database Connectivity**
+- JDBC
+- PreparedStatement
+- ResultSet
+- CRUD operations
+
+**Additional Concepts**
+- Java Collections Framework
+- Generics
+- Exception Handling
+- REST APIs
+- MVC Architecture
 
 ---
 
-## 🚀 Quick Start & Run Guide
+## 🏗️ Project Architecture
 
-### 1. Prerequisites
-- **Java Development Kit (JDK)**: JDK 17, 21, or 26.
-- **Git**
-- Maven Wrapper is pre-configured (`mvnw.cmd` on Windows, `./mvnw` on Linux/macOS).
+Growvia follows a layered architecture:
 
-### 2. Clone & Open Project
-```powershell
-# Clone repository
+```text
+                 USER
+                   |
+                   v
+            FRONTEND LAYER
+       HTML | CSS | JavaScript
+              Thymeleaf
+                   |
+                   v
+           CONTROLLER LAYER
+              Spring MVC
+                   |
+                   v
+             SERVICE LAYER
+             Business Logic
+                   |
+                   v
+           REPOSITORY LAYER
+          Spring Data JPA
+              JDBC DAO
+                   |
+                   v
+             H2 DATABASE
+```
+
+This architecture separates user interfaces, application logic, and database operations for better maintainability.
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+
+Make sure you have installed:
+
+- Java JDK 17 or higher
+- Git
+- VS Code, IntelliJ IDEA, or another Java IDE
+
+### Step 1: Clone the Repository
+
+```bash
 git clone https://github.com/NomadCodess/Growvia.git
+```
+
+### Step 2: Navigate to the Project
+
+```bash
 cd Growvia
 ```
 
-### 3. Run Automated Tests
-```powershell
-# On Windows
-.\mvnw.cmd test
+### Step 3: Run the Application
 
-# On Linux / macOS
-./mvnw test
-```
-*Expected Result:* `Tests run: 19, Failures: 0, Errors: 0, Skipped: 0` -> `BUILD SUCCESS`
+**Windows:**
 
-### 4. Start the Application
-```powershell
-# On Windows
+```bash
 .\mvnw.cmd spring-boot:run
+```
 
-# On Linux / macOS
+**Linux / macOS:**
+
+```bash
 ./mvnw spring-boot:run
 ```
 
-### 5. Access Growvia in Your Browser
-- **Community Dashboard**: [http://localhost:8080](http://localhost:8080)
-- **Gardening Tips**: [http://localhost:8080/tips](http://localhost:8080/tips)
-- **Plant Clinic (Discussions)**: [http://localhost:8080/discussions](http://localhost:8080/discussions)
-- **Garden Tracker (Projects)**: [http://localhost:8080/projects](http://localhost:8080/projects)
-- **About Growvia**: [http://localhost:8080/about](http://localhost:8080/about)
-- **Concurrent Analytics API**: [http://localhost:8080/api/analytics/concurrent-summary](http://localhost:8080/api/analytics/concurrent-summary)
-- **H2 Database Console**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-  - *JDBC URL*: `jdbc:h2:file:./data/gardendb`
-  - *Username*: `sa`
-  - *Password*: *(leave blank)*
+### Step 4: Open the Application
+
+Visit:
+
+`http://localhost:8080`
 
 ---
 
-## 🔌 Complete REST API Reference
+## 🌐 Application Pages
 
-| Method | Route | Description | Technical Feature |
-|---|---|---|---|
-| `GET` | `/api/stats` | High-level platform statistics | Spring Data JPA queries |
-| `GET` | `/api/tips` | List all tips with optional `?search=` and `?category=` | JPA Specifications |
-| `GET` | `/api/tips/{id}` | Retrieve tip by ID | Custom Exception on 404 |
-| `GET` | `/api/discussions` | List questions with `?category=` & `?resolved=` | Multi-parameter filtering |
-| `GET` | `/api/discussions/{id}` | Retrieve question details and replies | JPA Entity Relationships |
-| `GET` | `/api/projects` | List projects with `?search=` & `?status=` | Status enum mapping |
-| `GET` | `/api/projects/{id}` | Retrieve project journal details | Full CRUD |
-| `GET` | `/api/jdbc/metrics` | Category breakdown & project status metrics | **Direct JDBC PreparedStatement** |
-| `GET` | `/api/jdbc/tips/search` | Search tips via raw SQL PreparedStatement | **Generics (`SearchResultWrapper<T>`)** |
-| `GET` | `/api/advisor/diagnose` | Diagnose plant symptom (`?plantType=&symptom=`) | **Runtime Polymorphism** |
-| `GET` | `/api/advisor/care-plan` | Generate care schedule (`?plantType=&spaceType=`) | **Polymorphic Template Method** |
-| `GET` | `/api/analytics/concurrent-summary` | 4-thread parallel aggregated community metrics | **Multithreading & Synchronization** |
+| Page | Route |
+|---|---|
+| Home | `/` |
+| Gardening Tips | `/tips` |
+| Community Discussions | `/discussions` |
+| Garden Projects | `/projects` |
+| About | `/about` |
+| Analytics API | `/api/analytics/concurrent-summary` |
 
 ---
 
-## 📁 Repository Structure
+## 🎯 Project Objectives
 
-```
-Grow-Graden/
-├── pom.xml                                   # Maven POM with dependencies (Spring Boot, Thymeleaf, JPA, H2)
-├── mvnw.cmd / mvnw                           # Maven Wrapper executable scripts
-├── data/gardendb.*                           # Embedded persistent H2 database files
-├── Frontend/                                 # Static preview catalogue
-│   ├── index.html                            # Static landing page
-│   ├── login.html                            # Static login page
-│   ├── signup.html                           # Static signup page
-│   └── Css/main.css                          # Static styles
-└── src/
-    ├── main/
-    │   ├── java/com/example/
-    │   │   ├── GrowGradenApplication.java    # Spring Boot entry point
-    │   │   ├── config/
-    │   │   │   ├── DataInitializer.java       # Database seed data populator
-    │   │   │   └── GardenSecurityHeadersFilter.java # Jakarta Servlet Filter
-    │   │   ├── controller/
-    │   │   │   ├── HomeController.java        # Web dashboard controller
-    │   │   │   ├── GardeningTipController.java# Tips web controller
-    │   │   │   ├── DiscussionController.java  # Q&A web controller
-    │   │   │   ├── GardenProjectController.java # Project web controller
-    │   │   │   └── RestApiController.java    # Complete REST API controller
-    │   │   ├── domain/advisor/               # Polymorphic OOP Advisory Engine
-    │   │   │   ├── AbstractPlantAdvisor.java  # Abstract base class
-    │   │   │   ├── VegetableAdvisor.java      # Concrete subclass
-    │   │   │   ├── SucculentAdvisor.java      # Concrete subclass
-    │   │   │   ├── HerbAdvisor.java           # Concrete subclass
-    │   │   │   ├── TropicalFoliageAdvisor.java# Concrete subclass
-    │   │   │   ├── PlantAdvisorRegistry.java  # Polymorphic registry & factory
-    │   │   │   ├── CarePlan.java              # Care plan model
-    │   │   │   └── DiagnosticResult.java      # Diagnostic outcome model
-    │   │   ├── exception/                     # Custom Exception Hierarchy
-    │   │   │   ├── ResourceNotFoundException.java
-    │   │   │   ├── GardeningTipNotFoundException.java
-    │   │   │   ├── GardenProjectNotFoundException.java
-    │   │   │   ├── DiscussionQuestionNotFoundException.java
-    │   │   │   ├── ErrorResponse.java
-    │   │   │   └── GlobalExceptionHandler.java# Centralized @ControllerAdvice
-    │   │   ├── model/                         # JPA Entities
-    │   │   │   ├── GardeningTip.java
-    │   │   │   ├── DiscussionQuestion.java
-    │   │   │   ├── DiscussionReply.java
-    │   │   │   └── GardenProject.java
-    │   │   ├── repository/
-    │   │   │   ├── GardeningTipRepository.java
-    │   │   │   ├── DiscussionQuestionRepository.java
-    │   │   │   ├── DiscussionReplyRepository.java
-    │   │   │   ├── GardenProjectRepository.java
-    │   │   │   └── jdbc/                      # Direct JDBC Implementation
-    │   │   │       ├── GardenJdbcDao.java     # Raw SQL PreparedStatement DAO
-    │   │   │       ├── CategoryMetric.java
-    │   │   │       ├── ProjectStatusMetric.java
-    │   │   │       └── JdbcTipSummary.java
-    │   │   ├── service/                       # Business Logic Layer
-    │   │   │   ├── GardeningTipService.java / Impl
-    │   │   │   ├── DiscussionService.java / Impl
-    │   │   │   ├── GardenProjectService.java / Impl
-    │   │   │   └── GardenAnalyticsAggregator.java # Multithreading & Synchronization
-    │   │   └── util/
-    │   │       └── SearchResultWrapper.java   # Student-written Generics
-    │   └── resources/
-    │       ├── application.properties        # Application configuration
-    │       ├── static/
-    │       │   ├── css/
-    │       │   │   ├── style.css              # Emerald design system & typography
-    │       │   │   └── garden-reveal.css      # Hardware-accelerated scroll layers
-    │       │   └── js/
-    │       │       ├── cloud-shader.js        # WebGL atmospheric canopy drift
-    │       │       ├── garden-reveal.js       # Scroll controller
-    │       │       └── navbar.js              # Sidebar pinning & navigation
-    │       └── templates/                     # Thymeleaf Server-Rendered Views
-    │           ├── fragments/layout.html      # Master responsive template
-    │           ├── home.html                  # Community dashboard
-    │           ├── about.html                 # Mission & values
-    │           ├── error.html                 # Error page
-    │           ├── tips/                      # Tips list, form, detail
-    │           ├── discussions/               # Clinic list, form, detail
-    │           └── projects/                  # Projects list, form, detail
-    └── test/
-        └── java/com/example/
-            └── GrowGradenApplicationTests.java# 19 Full Integration Tests
-```
+The main objectives of Growvia are:
+
+1. Build an interactive online gardening community.
+2. Provide accessible gardening information.
+3. Encourage knowledge sharing among gardening enthusiasts.
+4. Help users identify and manage common plant problems.
+5. Enable users to organize and track gardening projects.
+6. Demonstrate practical implementation of Java and Spring Boot.
+7. Develop a responsive, user-friendly web application.
 
 ---
 
-## 👨‍💻 Project Submission Information
+## 🔮 Future Enhancements
 
-- **Project Name:** Growvia
-- **Tagline:** Grow knowledge. Share nature.
-- **Application Type:** Java Web-Based & Multi-Tier Enterprise Platform
-- **Presentation Slides:** See [PRESENTATION_SLIDES.md](PRESENTATION_SLIDES.md) in the repository root.
-- **License:** MIT License
+Potential future improvements include:
+
+- 🤖 AI-powered plant disease detection.
+- 📸 Image-based plant identification.
+- 🔐 User authentication and personalized profiles.
+- 🌦️ Weather-based gardening recommendations.
+- 🔔 Plant watering and maintenance reminders.
+- 📱 Mobile application support.
+- 🌍 Multilingual gardening resources.
+
+---
+
+## 📚 Learning Outcomes
+
+Developing Growvia provides practical experience in:
+
+- Full-stack Java web development.
+- Spring Boot application development.
+- Object-Oriented Programming.
+- Database design and management.
+- RESTful API development.
+- Multithreading and synchronization.
+- Responsive frontend development.
+- Git and GitHub version control.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## ⭐ Support
+
+If you find Growvia interesting or useful, consider giving the repository a ⭐ on GitHub!
+
+**🌱 Growvia — Grow Knowledge. Share Nature.**
